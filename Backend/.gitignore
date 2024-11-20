@@ -1,0 +1,13 @@
+node_modules/
+dist/
+build/
+
+*.tsbuildinfo
+
+package-lock.json
+
+.vscode/
+
+.DS_Store
+
+public/teilnehmerliste.html
