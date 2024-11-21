@@ -4,14 +4,19 @@ import {Trip} from '../models/trip_interface';
 let trips_list:Trip[]=[];
 
 export const createNewTrip=async(country:string,startDate:string,endDate:string):Promise<Trip>=>{
-  const newTrip:Trip={
-    id:trips_list.length+1,
-    country,
-    startDate,
-    endDate,
-  };
-  trips_list.push(newTrip); 
-  return newTrip;
+  try{
+      const newTrip:Trip={
+      id:trips_list.length+1,
+      country,
+      startDate,
+      endDate,
+    };
+    trips_list.push(newTrip); 
+    return newTrip;
+  }catch(error){
+    console.error('Error in createNewTrip:', error);
+    throw error; 
+  }
 };
 
 export const readAllTrips=async():Promise<Trip[]>=>{
