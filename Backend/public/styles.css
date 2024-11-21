@@ -1,0 +1,272 @@
+:root {
+    --black: black;
+    --white: white;
+    --grey: #bdbdbd;
+    --lightgrey: #FBFBFB;
+    --middlegrey: #f2f2f2;
+    --darkgrey: #2C2C2C;
+    --orange: #EC9752;
+    --forms-text: #8D8D8D;
+}
+
+body{
+    font-family: "Roboto", sans-serif;
+    font-weight: 400;
+    font-style: normal;
+    color: var(--black);
+    font-size: 16px;
+}
+
+.navbar{
+    background-color: var(--white);
+    padding: 10px 0;
+}
+.active{
+    border-top: 1.45px solid var(--black);
+    border-bottom: 1.45px solid var(--black);
+}
+.active:hover{
+    border-top: 1.45px solid var(--orange);
+    border-bottom: 1.45px solid var(--orange);
+    color: var(--orange);
+}
+.nav-link:hover{
+    color: var(--orange);
+}
+.nav-link.active:hover{
+    color: var(--orange);
+}
+.nav-item{
+    margin: 0 35px;
+}
+
+
+h1{
+    font-size: 64px;
+}
+.headerh1{
+    padding-top: 400px;
+}
+.light{
+    font-weight: 300;
+    font-style: normal;
+}
+h1.light{
+    color: var(--grey);
+}
+.bold{
+    font-weight: 700;
+    font-style: normal;
+}
+.card-title{
+    
+    color: var(--grey);
+    font-size: 50px;
+}
+
+.imageheader {
+    position: relative; /* Ermöglicht absolute Positionierung der Kinder */
+    display: inline-block; /* Passt den Container an die Bildgröße an */
+}
+
+.imageheader img {
+    display: block; /* Entfernt Lücken unter dem Bild */
+    width: 100%; /* Bild bleibt responsiv */
+}
+
+.imageheader .btn-white {
+    position: absolute; /* Positioniert den Button relativ zum Container */
+    top: -10%; /* Vertikal zentriert */
+    z-index: 10; /* Stellt sicher, dass der Button über dem Bild liegt */
+    top: 85%;
+}
+.btn-white{
+    background-color: var(--white);
+    text-transform: uppercase;
+    letter-spacing: 0.2cap;
+    padding: 30px 20px;
+    border-radius: 0 !important;
+    font-weight: 300;
+    font-style: normal;
+    font-size: 12px;
+}
+.btn-white:hover{
+    text-decoration: none;
+    background-color: var(--orange);
+    color: var(--white);
+    border:none;
+}
+.btn-dark{
+    background-color: var(--darkgrey);
+    color: var(--white);
+    text-transform: uppercase;
+    letter-spacing: 0.2cap;
+    padding: 30px 20px;
+    border-radius: 0 !important;
+    font-weight: 300;
+    font-style: normal;
+    font-size: 12px;
+}
+.btn-dark:hover{
+    text-decoration: none;
+    background-color: var(--orange);
+    color: var(--white);
+    border:none;
+}
+
+
+.bg-lightgrey{
+    background-color: var(--lightgrey);
+}
+.numbers p{
+    font-size: 22px;
+}
+.bignumber{
+    color: var(--middlegrey);
+    font-size: 200px !important;
+    font-weight: 900;
+    font-style: normal;
+    top: -60px;
+    position: relative;
+}
+.leftpadding{
+    padding-left: 40px;
+}
+
+
+
+.orange{
+    color: var(--orange);
+}
+
+.input-group>:not(:first-child):not(.dropdown-menu):not(.valid-tooltip):not(.valid-feedback):not(.invalid-tooltip):not(.invalid-feedback) {
+    margin-left: -1px;
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+}
+.input-group>.form-control, .input-group>.form-select {
+    position: relative;
+    flex: 1 1 auto;
+    width: 1%;
+    min-width: 0;
+}
+.input-group-text{
+    font-family: "Roboto", sans-serif;
+    font-weight: 400;
+    font-style: normal;
+    color: var(--forms-text);
+    font-size: 16px;
+    background-color: var(--middlegrey);
+    border-radius: 0;
+    width: 100%;
+    border: none;
+}
+.abstandrechts{
+    padding: 0 15px 0 0;
+}
+.form-control{
+    background-color: var(--middlegrey);
+    font-family: "Roboto", sans-serif;
+    font-weight: 400;
+    font-style: normal;
+    color: var(--forms-text);
+    font-size: 14px;
+    border: 1px solid var(--lightgrey);
+    box-shadow: none;
+}
+.form-control:focus{
+    background-color: var(--middlegrey);
+    font-family: "Roboto", sans-serif;
+    font-weight: 400;
+    font-style: normal;
+    color: var(--forms-text);
+    font-size: 14px;
+    outline: none;
+    border: 0.5px solid var(--lightgrey);
+    box-shadow: none;
+}
+.form-select{
+    background-color: var(--middlegrey);
+    font-family: "Roboto", sans-serif;
+    font-weight: 400;
+    font-style: normal;
+    color: var(--forms-text);
+    font-size: 14px;
+    border: 1px solid var(--lightgrey);
+    box-shadow: none;
+}
+.form-select:focus{
+    background-color: var(--middlegrey);
+    font-family: "Roboto", sans-serif;
+    font-weight: 400;
+    font-style: normal;
+    color: var(--forms-text);
+    font-size: 14px;
+    outline: none;
+    border: 0.5px solid var(--lightgrey);
+    box-shadow: none;
+}
+
+
+
+
+
+
+
+
+
+
+.card{
+    background-color: var(--lightgrey);
+    border: none;
+    border-radius: 0 !important;
+}
+.card-img-top{
+    border-radius: 0 !important;
+}
+.card-title{
+    padding: 30px 0 40px 0;
+}
+.card-body{
+    padding: 0 15px;
+}
+
+
+.btn{
+    min-width: 222px;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+.footer{
+    background-color: var(--darkgrey);
+    color: var(--white);
+    font-size: smaller;
+}
+.center{
+    text-align: center;
+}
+.footer a:hover{
+    text-decoration: none;
+    color: var(--orange);
+} 
+.footer a{
+    text-decoration: none;
+    color: var(--white);
+} 
+.footer i{
+    margin: 0 10px;
+}
