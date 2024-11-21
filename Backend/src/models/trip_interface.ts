@@ -5,6 +5,8 @@ export interface Trip {
   country: string;
   startDate: string;
   endDate: string;
+  guide?: string;
+  comment?: string;
 }
 
 // später enum mit Tour guides vllt?

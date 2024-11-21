@@ -98,7 +98,7 @@
   <h1 class="light">Add New Journey</h1>
   <div class="row">
       <div class="col-sm-5">
-        <form action="#">
+        <form id="tripForm"> <!-- statt action="xxx" -->
           <div class="input-group mb-3">
             <span class="input-group-text">Country<span class="orange abstandrechts">*</span>
             <input type="text" class="form-control" id="country" name="country" required>
@@ -117,18 +117,18 @@
 
           <div class="input-group mb-3">
               <span class="input-group-text">Guide<span class="abstandrechts"></span>
-              <select class="form-select">
-                <option>no guide yet</option>
-                <option>Luca Esposito (HUN)</option>
-                <option> Elias Constantinou (IT)</option>
-                <option>Massimo Rossi (ESP)</option>
-                <option>Mark Haller (GER)</option>
+              <select class="form-select" id="guide" name="guide">
+                <option value="no guide yet">no guide yet</option>
+                <option value="Luca Esposito (HUN)">Luca Esposito (HUN)</option>
+                <option value="Elias Constantinou (IT)"> Elias Constantinou (IT)</option>
+                <option value="Massimo Rossi (ESP)">Massimo Rossi (ESP)</option>
+                <option value="Mark Haller (GER)">Mark Haller (GER)</option>
               </select>
           </div>
 
           <div class="input-group mb-3">
               <span class="input-group-text">Comments:<span class="abstandrechts"></span>
-              <textarea class="form-control" rows="1" id="comment" name="text"></textarea>
+              <textarea class="form-control" rows="1" id="comment" name="comment"></textarea>
           </div>  
           <label for="comment"></label>
          
@@ -171,5 +171,40 @@
 </div>
 </div>
 
+
+
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+<script>
+  document.getElementById('tripForm').addEventListener('submit', async function(event) {
+    event.preventDefault();  
+
+    const country=document.getElementById('country').value;
+    const startDate=document.getElementById('startdate').value;
+    const endDate=document.getElementById('enddate').value;
+    const guide=document.getElementById('guide').value || '';  ;
+    const comment=document.getElementById('comment').value || '';  ;
+
+    if (guide === '') guide = 'no guide yet';
+    if (comment === '') comment = 'no comment';
+
+    try{
+        const response=await axios.post('http://localhost:8000/api/trips', {
+          country,
+          startDate,
+          endDate,
+          guide,
+          comment
+        });
+    
+      console.log('Journey created:', response.data);
+      alert('Journey created successfully!');
+      document.getElementById('tripForm').reset();
+    }catch(error){
+        console.error('Error creating journey:', error);
+        alert('Failed to create journey!');
+    }
+  });
+
+</script>
 </body>
 </html>

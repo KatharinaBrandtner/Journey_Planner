@@ -6,14 +6,18 @@ import {createNewTrip,readAllTrips,updateOneTrip,deleteONETrip} from '../service
 //CRUD
 // 1. Create (POST)
 export const createController=async(req:Request,res:Response):Promise<any>=>{
-  const {country,startDate,endDate}=req.body;
+  const {country,startDate,endDate, guide, comment}=req.body;
 
   if (!country||!startDate||!endDate) {
     return res.status(400).json({error: 'Required fields: Country, startDate and endDate'});
   }
 
+  //Standardwerte für optionalen Guide und Kommentar
+  const tripGuide=guide || 'no guide yet';
+  const tripComment=comment || 'no comment';
+
   try{
-    const newTrip=await createNewTrip(country,startDate,endDate);
+    const newTrip=await createNewTrip(country,startDate,endDate,tripGuide,tripComment);
     return res.status(201).json(newTrip);
   }catch(error){
     return res.status(500).json({error: 'Failed to create a new trip'});

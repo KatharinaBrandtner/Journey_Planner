@@ -3,13 +3,15 @@ import {Trip} from '../models/trip_interface';
 
 let trips_list:Trip[]=[];
 
-export const createNewTrip=async(country:string,startDate:string,endDate:string):Promise<Trip>=>{
+export const createNewTrip=async(country:string,startDate:string,endDate:string,guide:string,comment:string):Promise<Trip>=>{
   try{
       const newTrip:Trip={
       id:trips_list.length+1,
       country,
       startDate,
       endDate,
+      guide,
+      comment
     };
     trips_list.push(newTrip); 
     return newTrip;
