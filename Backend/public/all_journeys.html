@@ -44,19 +44,20 @@
   </div>
 </nav>
 
-<!-- <div class="container mt-5">
-    <div class="row">
-        <div class="col-sm-4"></div>
-        <div class="col-sm-8"></div>
-      </div>
-</div> -->
 
 <div class="container mt-5">
   <div class="col-sm-5"><br>
     <br>
     <br>
     <br><h1 class="light">All</h1><h1 class="bold">Journeys</h1></div>
-  <div class="row">
+</div>
+  
+<div class="container" id="trips-container">
+  <!-- Hier kommen die reise datensätze rein -->
+</div>   
+  
+<!-- <div class="container">
+    <div class="row">
       <div class="col-sm-6">
         <div class="card">
           <img class="card-img-top" src="images/c1.png" alt="Land">
@@ -94,10 +95,11 @@
         </div>
       </div>
     </div>
-</div>
+</div>  -->
 
 
-<div class="container mt-5">
+
+<!-- <div class="container mt-5">
   <div class="row">
       <div class="col-sm-6">
         <div class="card">
@@ -136,7 +138,7 @@
         </div>
       </div>
     </div>
-</div>
+</div> -->
 
 
 
@@ -179,6 +181,89 @@
 
 
 <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+
+<script>
+  // Abrufen der Reisen von der API
+  axios.get('http://localhost:8000/api/trips').then((response) => {
+      const trips = response.data; // Hier ist das Array der Reisen
+      const container = document.getElementById('trips-container');
+
+      // Initialisieren der Variablen
+      let currentRow;
+      
+      // Schleife über alle Reisen und Erstellen einer Karte für jede Reise
+      trips.forEach((trip, index) => {
+        // Wenn eine neue row gestartet werden muss
+        if (index % 2 === 0) {
+          currentRow = document.createElement('div');
+          currentRow.classList.add('row');
+          container.appendChild(currentRow);
+        }
+        
+        const countryImage = getCountryImage(trip.country);
+
+        // Erstellen der Karte
+        const card = document.createElement('div');
+        card.classList.add('col-sm-6'); // Jede Karte bekommt die halbe Breite
+        card.classList.add('mb-4'); // Fügt Abstand zwischen den Karten hinzu
+
+        card.innerHTML = `
+          <div class="card">
+            <img class="card-img-top" src="${countryImage}" alt="${trip.country}">
+            <div class="card-body">
+              <h4 class="card-title light">${trip.country}</h4>
+              <p class="card-text">
+                <span class="bold">Startdate:</span> ${trip.startDate}<br>
+                <span class="bold">Enddate:</span> ${trip.endDate}<br>
+                <span class="bold">Citys:</span> ${trip.city || 'Not available'}<br>
+                <span class="bold">Tourguide:</span> ${trip.guide}<br>
+                <span class="bold">Comment:</span> ${trip.comment}
+              </p>
+              <a href="edit.html"><button type="button" class="btn btn-lg btn-dark">Edit <i class="fa-solid fa-arrow-right-long"></i></button></a>
+              <a href="#"><button type="button" class="btn btn-lg btn-white">Delete</button></a>
+            </div>
+          </div>
+        `;
+
+        // Die Karte zur aktuellen Zeile hinzufügen
+        currentRow.appendChild(card);
+
+        // Wenn es das letzte Element in der Zeile ist und nur ein Element übrig bleibt
+        if (index % 2 === 0 && index + 1 === trips.length) {
+          const emptyCard = document.createElement('div');
+          emptyCard.classList.add('col-sm-6');
+          emptyCard.classList.add('mb-4');
+          currentRow.appendChild(emptyCard);
+        }
+      });
+    })
+    .catch((error) => {
+      console.error('Error fetching trips:', error);
+    });
+
+
+
+
+    function getCountryImage(country) {
+    const countryImages = {
+      'germany': 'germany.png',
+      'hungary': 'hungary.png',
+      'spain': 'spain.png',
+      'italy': 'italy.png',
+      'greece': 'greece.png',
+    };
+    const countryLower = country.toLowerCase();
+
+    if (countryImages[countryLower]) {
+      return `images/${countryImages[countryLower]}`;
+    }
+    return 'images/country.png';
+  }
+
+
+</script>
+
+
 
 </body>
 </html>
