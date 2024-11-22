@@ -1,6 +1,6 @@
 // Autor: Katharina Brandtner 
 import {Router} from 'express'; 
-import {createController,readController,updateController,deleteController} from '../controllers/trip_controller';
+import {createController,readController,updateController,deleteController,readOneController} from '../controllers/trip_controller';
 
 const router=Router();
 
@@ -9,5 +9,7 @@ router.post('/',createController);
 router.get('/',readController); ///erarbeitet GET-Anfragen auf /api/trips und ruft die getTrips-Funktion im Controller auf
 router.put('/:id',updateController);
 router.delete('/:id',deleteController);
+
+router.get('/:id',readOneController); 
 
 export default router; //exportieren des Routers, damit er in der server.ts verwendet werden kann, um die Anfragen zu verbinden

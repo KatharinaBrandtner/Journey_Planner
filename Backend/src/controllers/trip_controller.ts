@@ -1,6 +1,6 @@
 // Autor: Katharina Brandtner 
 import {Request,Response} from 'express';
-import {createNewTrip,readAllTrips,updateOneTrip,deleteONETrip} from '../services/trip_service';
+import {createNewTrip,readALLTrips,updateONETrip,deleteONETrip,readONETrip} from '../services/trip_service';
 
 
 //CRUD
@@ -26,9 +26,10 @@ export const createController=async(req:Request,res:Response):Promise<any>=>{
 
 
 // 2. Read (GET)
+//all
 export const readController=async(req:Request,res:Response):Promise<any>=>{
   try{
-    const trips=await readAllTrips();
+    const trips=await readALLTrips();
     res.json(trips);
     return
   }catch(error){
@@ -36,11 +37,35 @@ export const readController=async(req:Request,res:Response):Promise<any>=>{
   }
 };
 
+// one
+export const readOneController=async(req:Request,res:Response):Promise<any>=>{ 
+  const{id}=req.params; 
+  const tripId=parseInt(id); 
+
+  if(isNaN(tripId)){ 
+    return res.status(400).json({error:'Not the right ID format'}); 
+  }
+
+  try{ 
+    const trip=await readONETrip(tripId);//verweis service.ts 
+    if(trip){ 
+      return res.status(200).json(trip); 
+    }else{ 
+      return res.status(404).json({error:'Trip not found'}); 
+    } 
+  }catch(error){ 
+    return res.status(500).json({error:'Failed to retrieve trip'}); 
+  } 
+};
+
+
+
+
 
 // 3. Update (PUT)
 export const updateController=async(req:Request,res:Response):Promise<any>=>{
   const {id}=req.params; // params um URL-Parameter id aus URL zu holen/speichern
-  const {country,startDate,endDate}=req.body;
+  const {country,startDate,endDate,guide, comment}=req.body;
 
   const tripId = parseInt(id); //schauen ob id gültige zahö
   if (isNaN(tripId)) {
@@ -48,7 +73,7 @@ export const updateController=async(req:Request,res:Response):Promise<any>=>{
   }
 
   try {
-    const updatedTrip=await updateOneTrip(parseInt(id),country,startDate,endDate);
+    const updatedTrip=await updateONETrip(parseInt(id),country,startDate,endDate,guide,comment);
     if (!updatedTrip) {
       return res.status(404).json({error: 'Couldnt found Trip with id'});
     }
@@ -58,6 +83,8 @@ export const updateController=async(req:Request,res:Response):Promise<any>=>{
     return res.status(500).json({ error: 'Failed to update a specific trip'});
   }
 };
+
+
 
 
 // 4. Delete (DELETE)
@@ -80,3 +107,8 @@ export const deleteController=async(req:Request,res:Response):Promise<any>=>{
     return res.status(500).json({ error: 'Failed to delete a specific trip'});
   }
 };
+
+
+
+
+

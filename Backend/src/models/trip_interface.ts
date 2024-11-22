@@ -8,6 +8,3 @@ export interface Trip {
   guide?: string;
   comment?: string;
 }
-
-// später enum mit Tour guides vllt?
-//
