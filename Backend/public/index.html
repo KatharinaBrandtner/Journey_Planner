@@ -191,6 +191,7 @@
       alert('Start date has to be before the end date');
       return; 
     }
+
     try {
       const response = await axios.post('http://localhost:8000/api/trips', {
         country,
