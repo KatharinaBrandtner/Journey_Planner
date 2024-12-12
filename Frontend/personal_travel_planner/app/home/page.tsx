@@ -1,2 +1,0 @@
-// Katharina Brandtner
-//home
