@@ -7,4 +7,10 @@ export interface Trip {
   endDate: string;
   guide?: string;
   comment?: string;
+  cityone?: string;
+  numbercityone?: number;
+  citytwo?: string;
+  numbercitytwo?: number;
+  citythree?: string;
+  numbercitythree?: number;  
 }

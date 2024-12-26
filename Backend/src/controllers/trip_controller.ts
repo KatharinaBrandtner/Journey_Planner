@@ -6,8 +6,7 @@ import {createNewTrip,readALLTrips,updateONETrip,deleteONETrip,readONETrip} from
 //CRUD
 // 1. Create (POST)
 export const createController=async(req:Request,res:Response):Promise<any>=>{
-  const {country,startDate,endDate, guide, comment}=req.body;
-
+  const {country,startDate,endDate, guide, comment, cityone, numbercityone, citytwo, numbercitytwo, citythree, numbercitythree}=req.body;
   if (!country||!startDate||!endDate) {
     return res.status(400).json({error: 'Required fields: Country, startDate and endDate'});
   }
@@ -17,7 +16,7 @@ export const createController=async(req:Request,res:Response):Promise<any>=>{
   const tripComment=comment || 'no comment';
 
   try{
-    const newTrip=await createNewTrip(country,startDate,endDate,tripGuide,tripComment);
+    const newTrip=await createNewTrip(country,startDate,endDate,tripGuide,tripComment, cityone, numbercityone, citytwo, numbercitytwo, citythree, numbercitythree);
     return res.status(201).json(newTrip);
   }catch(error){
     return res.status(500).json({error: 'Failed to create a new trip'});
@@ -65,7 +64,7 @@ export const readOneController=async(req:Request,res:Response):Promise<any>=>{
 // 3. Update (PUT)
 export const updateController=async(req:Request,res:Response):Promise<any>=>{
   const {id}=req.params; // params um URL-Parameter id aus URL zu holen/speichern
-  const {country,startDate,endDate,guide, comment}=req.body;
+  const {country,startDate,endDate,guide, comment, cityone, numbercityone, citytwo, numbercitytwo, citythree, numbercitythree}=req.body;
 
   const tripId = parseInt(id); //schauen ob id gültige zahö
   if (isNaN(tripId)) {
@@ -73,7 +72,7 @@ export const updateController=async(req:Request,res:Response):Promise<any>=>{
   }
 
   try {
-    const updatedTrip=await updateONETrip(parseInt(id),country,startDate,endDate,guide,comment);
+    const updatedTrip=await updateONETrip(parseInt(id),country,startDate,endDate,guide,comment, cityone, numbercityone, citytwo, numbercitytwo, citythree, numbercitythree);
     if (!updatedTrip) {
       return res.status(404).json({error: 'Couldnt found Trip with id'});
     }

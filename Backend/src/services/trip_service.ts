@@ -6,7 +6,7 @@ let trips_list:Trip[]=[];
 
 
 //create
-export const createNewTrip=async(country:string,startDate:string,endDate:string,guide:string,comment:string):Promise<Trip>=>{
+export const createNewTrip=async(country:string,startDate:string,endDate:string,guide:string,comment?:string, cityone?: string,numbercityone?: number,citytwo?: string,numbercitytwo?: number,citythree?: string,numbercitythree?: number):Promise<Trip>=>{
   try{
       const newTrip:Trip={
       id:trips_list.length+1,
@@ -14,7 +14,13 @@ export const createNewTrip=async(country:string,startDate:string,endDate:string,
       startDate,
       endDate,
       guide,
-      comment
+      comment,
+      cityone,
+      numbercityone,
+      citytwo,
+      numbercitytwo,
+      citythree,
+      numbercitythree,
     };
     trips_list.push(newTrip); 
     return newTrip;
@@ -37,7 +43,7 @@ export const readONETrip=async(id:number):Promise<Trip|null>=>{
 
 
 // update
-export const updateONETrip=async(id:number,country:string,startDate:string,endDate:string,guide?:string, comment?:string):Promise<Trip|null>=>{
+export const updateONETrip=async(id:number,country:string,startDate:string,endDate:string,guide?:string, comment?:string, cityone?: string,numbercityone?: number,citytwo?: string,numbercitytwo?: number,citythree?: string,numbercitythree?: number):Promise<Trip|null>=>{
   const tripIndex=trips_list.findIndex((trip)=>trip.id===id); //weil js wenn kein element gefunden wird -1 ausgibt
   if(tripIndex===-1){ // nicht das "-1" also string zurück gegeben wird dann wäre es mit == richtig
     return null; // Trip nicht gefunden
@@ -57,6 +63,14 @@ export const updateONETrip=async(id:number,country:string,startDate:string,endDa
   if (comment) {
     trips_list[tripIndex].comment=comment;
   }
+
+  if (cityone !== undefined) trips_list[tripIndex].cityone = cityone;
+  if (numbercityone !== undefined) trips_list[tripIndex].numbercityone = numbercityone;
+  if (citytwo !== undefined) trips_list[tripIndex].citytwo = citytwo;
+  if (numbercitytwo !== undefined) trips_list[tripIndex].numbercitytwo = numbercitytwo;
+  if (citythree !== undefined) trips_list[tripIndex].citythree = citythree;
+  if (numbercitythree !== undefined) trips_list[tripIndex].numbercitythree = numbercitythree;
+  
   return trips_list[tripIndex];
 };
 
