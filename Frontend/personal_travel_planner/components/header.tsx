@@ -18,7 +18,7 @@ export default function Header(){
               <div className="col-sm-7">
                   <div className={`${styles.imageheader}`}> 
                       <img src="images/hero.png" className="img-fluid" alt="sea" width="100%"/>
-                      <a href="all_journeys.html"><Btn text="all journeys" variant='btn-white'/></a>
+                      <a href="/allJourneys"><Btn text="all journeys" variant='btn-white'/></a>
                   </div>
               </div>
             </div>

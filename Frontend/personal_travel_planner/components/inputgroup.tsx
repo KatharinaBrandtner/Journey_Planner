@@ -5,7 +5,7 @@ import React from 'react';
 import { InputGroupProps } from '@/types/inputgroupprops';
 import styles from '../app/page.module.css';
 
-export default function InputGroup({text, type, date, required}: InputGroupProps){
+export default function InputGroup({text, type, date, required, onChange, valueinput, name}: InputGroupProps){
   const requiredMark=required? (
     <span className={`${styles.orange} ${styles.abstandrechts}`}>*</span>
   ): null
@@ -18,7 +18,18 @@ export default function InputGroup({text, type, date, required}: InputGroupProps
           <span className={`input-group-text ${styles.inputgrouptextCustom}`}>
             {text} {requiredMark}
           </span>
-          <input type="text" className={`form-control ${styles.formcontrolCustom}`} id={text} name={text} required={!!required} />
+          <input type="text" className={`form-control ${styles.formcontrolCustom}`} id={name || text.toLowerCase().replace(' ', '-')} name={name || text.toLowerCase().replace(' ', '-')} required={!!required} onChange={onChange} value={valueinput} />
+        </>
+      );
+      break;
+
+    case 'number':
+      inputElement=(
+        <>
+          <span className={`input-group-text ${styles.inputgrouptextCustom}`}>
+            {text} {requiredMark}
+          </span>
+          <input type="number" className={`form-control ${styles.formcontrolCustom}`} id={name || text.toLowerCase().replace(' ', '-')} name={name || text.toLowerCase().replace(' ', '-')} required={!!required} onChange={onChange} value={valueinput} />
         </>
       );
       break;
@@ -27,7 +38,7 @@ export default function InputGroup({text, type, date, required}: InputGroupProps
       inputElement=(
         <>
           <span className={`input-group-text ${styles.inputgrouptextCustom}`}>{text} {requiredMark}</span>
-          <input type="date" className={`form-control ${styles.formcontrolCustom}`} id={`${date}-date`} name={`${date}-date`} required={!!required} />
+          <input type="date" value={valueinput instanceof Date ? valueinput.toISOString().split('T')[0] : valueinput} className={`form-control ${styles.formcontrolCustom}`} id={`${date}-date`} name={`${date}-date`} required={!!required} onChange={onChange} />
         </>
       );
       break;
@@ -36,7 +47,7 @@ export default function InputGroup({text, type, date, required}: InputGroupProps
       inputElement=(
         <>
           <span className={`input-group-text ${styles.inputgrouptextCustom}`}>{text} {requiredMark}</span>
-          <textarea className={`form-control ${styles.formcontrolCustom}`} rows={1} id="comment" name="comment"></textarea>
+          <textarea className={`form-control ${styles.formcontrolCustom}`} value={valueinput as string} rows={1} id="comment" name="comment" onChange={onChange}></textarea>
         </>
       );
       break;
@@ -45,7 +56,7 @@ export default function InputGroup({text, type, date, required}: InputGroupProps
       inputElement=(
         <>
           <span className={`input-group-text ${styles.inputgrouptextCustom}`}>{text} {requiredMark}</span>
-          <select className={`form-select ${styles.formselectCustom}`} id="guide" name="guide">
+          <select className={`form-select ${styles.formselectCustom}`} value={valueinput as string} id="guide" name="guide" onChange={onChange}>
             <option value="no guide yet">no guide yet</option>
             <option value="Luca Esposito (HUN)">Luca Esposito (HUN)</option>
             <option value="Elias Constantinou (IT)">Elias Constantinou (IT)</option>

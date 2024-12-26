@@ -18,7 +18,7 @@ import Journeyform from '@components/journeyform';
 export default function Page(){
   return (
     <>
-      <Navbar/>
+      <Navbar active='home'/>
       <Header/>
       <About/>
       <Number/>

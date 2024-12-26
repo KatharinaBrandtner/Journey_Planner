@@ -40,28 +40,29 @@ h1.light{
   font-weight: 700 !important;
   font-style: normal;
 }
-.card-title{
-  
-  color: var(--grey);
-  font-size: 50px;
+.link{
+  color: var(--orange);
 }
-
+.link:hover{
+  color: var(--orange);
+  font-weight: bold;
+}
 .imageheader {
-  position: relative; /* Ermöglicht absolute Positionierung der Kinder */
-  display: inline-block; /* Passt den Container an die Bildgröße an */
+  position: relative; 
+  display: inline-block; 
 }
 
 .imageheader img {
-  display: block; /* Entfernt Lücken unter dem Bild */
-  width: 100%; /* Bild bleibt responsiv */
+  display: block; 
+  width: 100%;
 }
 
 
 /* buttons */
 .imageheader .btn-white {
-  position: absolute; /* Positioniert den Button relativ zum Container */
-  top: -10%; /* Vertikal zentriert */
-  z-index: 10; /* Stellt sicher, dass der Button über dem Bild liegt */
+  position: absolute; 
+  top: -10%; 
+  z-index: 10; 
   top: 85%;
 }
 .btn-white{
@@ -98,6 +99,9 @@ h1.light{
   background-color: var(--orange);
   color: var(--white);
   border:none;
+}
+.btn{
+  min-width: 222px;
 }
 
 /* number component */
@@ -208,20 +212,19 @@ h1.light{
   border: none;
   border-radius: 0 !important;
 }
-.card-img-top{
+.cardimgtopCustom{
   border-radius: 0 !important;
 }
-.card-title{
-  padding: 30px 0 40px 0;
-}
-.card-body{
+.cardbodyCustom{
   padding: 0 15px;
 }
-
-
-.btn{
-  min-width: 222px;
+.cardtitleCustom{
+  padding: 30px 0 40px 0;
+  color: var(--grey);
+  font-size: 50px;
 }
+
+
 
 
 
