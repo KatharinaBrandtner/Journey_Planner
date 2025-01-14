@@ -5,6 +5,7 @@ import bodyParser from 'body-parser';
 import tripRoutes from './routes/trip_routes';
 
 import cors from 'cors';
+import mongoose from 'mongoose';
 
 //express Einrichten
 dotenv.config();
@@ -39,4 +40,12 @@ app.use((err: Error, req: Request, res: Response, next: NextFunction) => {
 //Server starten
 app.listen(PORT,()=>{
     console.log(`Server started at http://localhost:${PORT}`);
+});
+
+
+// mongo db
+mongoose.connect(process.env.MONGO_URI || '').then(()=>{ //hab die Mongo_URI in meiner .env die in gitignore ist, ich hoffe das klappt wenn Sie ihre eigene Datenbank anhängen? 
+    console.log('MongoDB connected!');
+}).catch((error:any)=>{
+    console.log(error);
 });

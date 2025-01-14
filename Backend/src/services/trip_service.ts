@@ -1,87 +1,57 @@
-// Autor: Katharina Brandtner 
-import {Trip} from '../models/trip_interface';
+// Autor: Katharina Brandtner
 
-let trips_list:Trip[]=[];
+import Trip,{ITrip}from'../models/trip_model';
 
-
-
-//create
-export const createNewTrip=async(country:string,startDate:string,endDate:string,guide:string,comment?:string, cityone?: string,numbercityone?: number,citytwo?: string,numbercitytwo?: number,citythree?: string,numbercitythree?: number):Promise<Trip>=>{
-  try{
-      const newTrip:Trip={
-      id:trips_list.length+1,
-      country,
-      startDate,
-      endDate,
-      guide,
-      comment,
-      cityone,
-      numbercityone,
-      citytwo,
-      numbercitytwo,
-      citythree,
-      numbercitythree,
-    };
-    trips_list.push(newTrip); 
-    return newTrip;
-  }catch(error){
-    console.error('Error in createNewTrip:', error);
-    throw error; 
-  }
+// CREATE
+export const createNewTrip=async(data:Partial<ITrip>):Promise<ITrip>=>{
+    try{
+        const trip=new Trip(data);
+        return await trip.save(); // Speichert den neuen Trip in der MongoDB
+    }catch(error){
+        console.error('Error creating trip:',error);
+        throw new Error('Failed to create trip');
+    }
 };
 
-
-
-// read
-export const readALLTrips=async():Promise<Trip[]>=>{
-  return trips_list; 
-};
-export const readONETrip=async(id:number):Promise<Trip|null>=>{ 
-  const trip=trips_list.find(trip=>trip.id===id); 
-  return trip||null; // Gibt die Reise zurück oder null, wenn sie nicht gefunden wurde 
+// READ ALL
+export const readALLTrips=async():Promise<ITrip[]>=>{
+  const trips=await Trip.find().lean(); // laut online: Die lean()-Methode wird verwendet, um einfache JavaScript-Objekte statt vollständiger Mongoose-Dokumente zurückzugeben, was effizienter ist.
+  return trips.map(trip=>({
+      ...trip,
+      id:trip._id.toString(), //Fügt das id-Feld hinzu
+  }));
 };
 
-
-// update
-export const updateONETrip=async(id:number,country:string,startDate:string,endDate:string,guide?:string, comment?:string, cityone?: string,numbercityone?: number,citytwo?: string,numbercitytwo?: number,citythree?: string,numbercitythree?: number):Promise<Trip|null>=>{
-  const tripIndex=trips_list.findIndex((trip)=>trip.id===id); //weil js wenn kein element gefunden wird -1 ausgibt
-  if(tripIndex===-1){ // nicht das "-1" also string zurück gegeben wird dann wäre es mit == richtig
-    return null; // Trip nicht gefunden
-  }
-  if (country) {
-    trips_list[tripIndex].country=country;
-  }
-  if (startDate) {
-    trips_list[tripIndex].startDate=startDate;
-  }
-  if (endDate) {
-    trips_list[tripIndex].endDate=endDate;
-  }
-  if (guide) {
-    trips_list[tripIndex].guide=guide;
-  }
-  if (comment) {
-    trips_list[tripIndex].comment=comment;
+// READ ONE
+export const readONETrip=async(id:string):Promise<ITrip|null>=>{
+  if(!id||id.length!==24){ // weil mongo id immer 24 zeichen
+      throw new Error('Invalid or missing ID');
   }
 
-  if (cityone !== undefined) trips_list[tripIndex].cityone = cityone;
-  if (numbercityone !== undefined) trips_list[tripIndex].numbercityone = numbercityone;
-  if (citytwo !== undefined) trips_list[tripIndex].citytwo = citytwo;
-  if (numbercitytwo !== undefined) trips_list[tripIndex].numbercitytwo = numbercitytwo;
-  if (citythree !== undefined) trips_list[tripIndex].citythree = citythree;
-  if (numbercitythree !== undefined) trips_list[tripIndex].numbercitythree = numbercitythree;
-  
-  return trips_list[tripIndex];
+  const trip=await Trip.findById(id).lean(); 
+  if(trip){
+    trip.id=trip._id.toString(); 
+  }
+  return trip;
 };
 
+// UPDATE
+export const updateONETrip=async(id:string,data:Partial<ITrip>):Promise<ITrip|null>=>{
+    try{
+        return await Trip.findByIdAndUpdate(id,data,{new:true}); // Trip-Daten aktualisieren
+    }catch(error){
+        console.error('Error updating trip:',error);
+        throw new Error('Failed to update trip');
+    }
+};
 
-
-// delete
-export const deleteONETrip=async(id:number):Promise<boolean>=>{
-  const tripIndex=trips_list.findIndex((trip)=>trip.id===id); 
-  if(tripIndex===-1){
-    return false; // Trip nicht gefunden
-  }
-  trips_list.splice(tripIndex,1); // Trip löschen
-  return true;
+// DELETE
+export const deleteONETrip=async(id:string):Promise<boolean>=>{
+    try{
+        const result=await Trip.findByIdAndDelete(id); // Trip löschen
+        return!!result; // Gibt true zurück, wenn Trip gelöscht wurde
+    }catch(error){
+        console.error('Error deleting trip:',error);
+        throw new Error('Failed to delete trip');
+    }
 };

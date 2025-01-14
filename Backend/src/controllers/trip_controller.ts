@@ -1,113 +1,75 @@
-// Autor: Katharina Brandtner 
+// Autor: Katharina Brandtner
 import {Request,Response} from 'express';
 import {createNewTrip,readALLTrips,updateONETrip,deleteONETrip,readONETrip} from '../services/trip_service';
 
-
 //CRUD
 // 1. Create (POST)
-export const createController=async(req:Request,res:Response):Promise<any>=>{
-  const {country,startDate,endDate, guide, comment, cityone, numbercityone, citytwo, numbercitytwo, citythree, numbercitythree}=req.body;
-  if (!country||!startDate||!endDate) {
-    return res.status(400).json({error: 'Required fields: Country, startDate and endDate'});
-  }
-
-  //Standardwerte für optionalen Guide und Kommentar
-  const tripGuide=guide || 'no guide yet';
-  const tripComment=comment || 'no comment';
-
+export const createController=async(req:Request,res:Response):Promise<void>=>{
   try{
-    const newTrip=await createNewTrip(country,startDate,endDate,tripGuide,tripComment, cityone, numbercityone, citytwo, numbercitytwo, citythree, numbercitythree);
-    return res.status(201).json(newTrip);
+      const trip=await createNewTrip(req.body);
+      res.status(201).json(trip);
   }catch(error){
-    return res.status(500).json({error: 'Failed to create a new trip'});
+      res.status(500).json({error:'Failed to create trip'});
   }
 };
-
 
 // 2. Read (GET)
 //all
-export const readController=async(req:Request,res:Response):Promise<any>=>{
+export const readController=async(req:Request,res:Response):Promise<void>=>{
   try{
-    const trips=await readALLTrips();
-    res.json(trips);
-    return
+      const trips=await readALLTrips();
+      res.status(200).json(trips);
   }catch(error){
-    return res.status(500).json({error: 'Failed to show/read all trips'});
+      res.status(500).json({error:'Failed to fetch trips'});
   }
 };
-
 // one
-export const readOneController=async(req:Request,res:Response):Promise<any>=>{ 
-  const{id}=req.params; 
-  const tripId=parseInt(id); 
+export const readOneController=async(req:Request,res:Response):Promise<void>=>{
+  const{id}=req.params;
 
-  if(isNaN(tripId)){ 
-    return res.status(400).json({error:'Not the right ID format'}); 
+  if(!id||id.length!==24){
+      res.status(400).json({error:'Invalid or missing trip ID'});
+      return;
   }
 
-  try{ 
-    const trip=await readONETrip(tripId);//verweis service.ts 
-    if(trip){ 
-      return res.status(200).json(trip); 
-    }else{ 
-      return res.status(404).json({error:'Trip not found'}); 
-    } 
-  }catch(error){ 
-    return res.status(500).json({error:'Failed to retrieve trip'}); 
-  } 
+  try{
+      const trip=await readONETrip(id);
+      if(!trip){
+          res.status(404).json({error:'Trip not found'});
+      }else{
+          res.status(200).json(trip);
+      }
+  }catch(error){
+      res.status(500).json({error:'Failed to fetch trip'});
+  }
 };
-
-
-
-
 
 // 3. Update (PUT)
-export const updateController=async(req:Request,res:Response):Promise<any>=>{
-  const {id}=req.params; // params um URL-Parameter id aus URL zu holen/speichern
-  const {country,startDate,endDate,guide, comment, cityone, numbercityone, citytwo, numbercitytwo, citythree, numbercitythree}=req.body;
-
-  const tripId = parseInt(id); //schauen ob id gültige zahö
-  if (isNaN(tripId)) {
-    return res.status(400).json({error: 'Not the right ID format'});
-  }
-
-  try {
-    const updatedTrip=await updateONETrip(parseInt(id),country,startDate,endDate,guide,comment, cityone, numbercityone, citytwo, numbercitytwo, citythree, numbercitythree);
-    if (!updatedTrip) {
-      return res.status(404).json({error: 'Couldnt found Trip with id'});
-    }
-    res.json(updatedTrip);
-    return
-  } catch (error) {
-    return res.status(500).json({ error: 'Failed to update a specific trip'});
+export const updateController=async(req:Request,res:Response):Promise<void>=>{
+  const{id}=req.params;
+  try{
+      const updatedTrip=await updateONETrip(id,req.body);
+      if(!updatedTrip){
+          res.status(404).json({error:'Trip not found'});
+      }else{
+          res.status(200).json(updatedTrip);
+      }
+  }catch(error){
+      res.status(500).json({error:'Failed to update trip'});
   }
 };
-
-
-
 
 // 4. Delete (DELETE)
-export const deleteController=async(req:Request,res:Response):Promise<any>=>{
-  const {id}=req.params;
-
-  const tripId = parseInt(id);
-  if (isNaN(tripId)) {
-    return res.status(400).json({error: 'Not the right ID format'});
-  }
-
-  try {
-    const success=await deleteONETrip(tripId);
-    if (!success) {
-      return res.status(404).json({error: 'Couldnt find Trip with id'});
-    }
-    res.status(204).send();
-    return
-  }catch(error) {
-    return res.status(500).json({ error: 'Failed to delete a specific trip'});
+export const deleteController=async(req:Request,res:Response):Promise<void>=>{
+  const{id}=req.params;
+  try{
+      const deleted=await deleteONETrip(id);
+      if(!deleted){
+          res.status(404).json({error:'Trip not found'});
+      }else{
+          res.status(204).send();
+      }
+  }catch(error){
+      res.status(500).json({error:'Failed to delete trip'});
   }
 };
-
-
-
-
-
