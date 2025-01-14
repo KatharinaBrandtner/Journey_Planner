@@ -13,6 +13,9 @@ import EditTripForm from '@components/editforms';
 export default function EditTripPage() {
     
      const params = useParams();
+     if (!params?.id) {
+        return <div>Error: Trip ID not found!</div>;
+     }
      const id = Array.isArray(params.id) ? params.id[0] : params.id; //sonst fehlermeldung bei id params zeugs
 
     if (!id) {
@@ -25,7 +28,7 @@ export default function EditTripPage() {
             <div className="container mt-5 mb-5 pt-5">
                 <Heading text="Edit" variant="light" />
                 <Heading text="Journey" variant="bold" />
-                <EditTripForm params={{ id }} />
+                <EditTripForm params={{id}} />
             </div>
             <Footer />
         </>

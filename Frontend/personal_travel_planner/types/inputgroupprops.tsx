@@ -8,4 +8,5 @@ export interface InputGroupProps {
     onChange?: (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => void;
     valueinput?: string | number | any;
     name?: string;
+    placeholder?: string;
 }
