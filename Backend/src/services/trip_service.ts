@@ -1,6 +1,7 @@
 // Autor: Katharina Brandtner
 
 import Trip,{ITrip}from'../models/trip_model';
+import validateTripData from '../controllers/date_controller'
 
 // CREATE
 export const createNewTrip=async(data:Partial<ITrip>):Promise<ITrip>=>{

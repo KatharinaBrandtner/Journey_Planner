@@ -30,6 +30,8 @@ export default function Journeyform(){
     const handleSubmit=async(e:React.FormEvent)=>{
         e.preventDefault();
 
+        console.log('Form data being sent:', formData); // Hier siehst du, was gesendet wird kann weg
+
         // Überprüfen, ob Startdatum vor Enddatum liegt
         if(!isStartDateBeforeEndDate(formData.startDate,formData.endDate)){
             return; // Validierung fehlgeschlagen
@@ -42,6 +44,9 @@ export default function Journeyform(){
                     ...formData,
                     guide:formData.guide||'no guide yet', 
                     comment:formData.comment||'no comment', 
+                    numbercityone:0, 
+                    numbercitytwo:0, 
+                    numbercitythree:0, 
                 },
                 {
                     headers:{

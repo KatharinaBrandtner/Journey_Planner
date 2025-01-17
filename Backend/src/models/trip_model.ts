@@ -17,10 +17,10 @@ export interface ITrip {
     _id: string; //  MongoDB-Feld
     id?: string; // Manuelles `id`-Feld
 }
-const TripSchema=new mongoose.Schema<ITrip>({
+const TripSchema=new mongoose.Schema<ITrip>({ //sonst noch validierungen // sign in wird auch über postman geprüft das muss klappen bitte
     country:{type:String,required:true},
-    startDate:{type:String,required:true},
-    endDate:{type:String,required:true},
+    startDate:{type:String,required:true}, // soll auch reisen rückwirkend anlegen können 
+    endDate:{type:String,required:true}, 
     guide:{type:String,default:'no guide yet'},
     comment:{type:String,default:'no comment'},
     cityone:{type:String,default:''},

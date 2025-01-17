@@ -44,7 +44,7 @@ app.listen(PORT,()=>{
 
 
 // mongo db
-mongoose.connect(process.env.MONGO_URI || '').then(()=>{ //hab die Mongo_URI in meiner .env die in gitignore ist, ich hoffe das klappt wenn Sie ihre eigene Datenbank anhängen? 
+mongoose.connect(process.env.MONGO_URI || '').then(()=>{ //hab die Mongo_URI in meiner .env die in gitignore ist, ich hoffe das klappt wenn Sie ihre eigene Datenbank anhängen?
     console.log('MongoDB connected!');
 }).catch((error:any)=>{
     console.log(error);
