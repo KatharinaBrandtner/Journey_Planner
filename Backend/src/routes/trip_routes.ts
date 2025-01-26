@@ -8,6 +8,7 @@ const router = express.Router();
 
 router.post("/trips", verifyToken, createController);
 router.get("/trips", verifyToken, readController);
+router.get("/trips/:id", verifyToken, readOneController);
 router.put("/trips/:id", verifyToken, updateController);
 router.delete("/trips/:id", verifyToken, deleteController);
 

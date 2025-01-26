@@ -1,27 +1,23 @@
 // Katharina Brandtner
 // edit one
-
 "use client";
-
-import React from 'react';
+import React, { useEffect, useState } from "react";
 import { useParams } from 'next/navigation';
 import Navbar from '@components/navbar';
 import Footer from '@components/footer';
 import Heading from '@components/heading';
 import EditTripForm from '@components/editforms'; 
-
 export default function EditTripPage() {
-    
+ 
      const params = useParams();
+  
      if (!params?.id) {
         return <div>Error: Trip ID not found!</div>;
      }
      const id = Array.isArray(params.id) ? params.id[0] : params.id; //sonst fehlermeldung bei id params zeugs
-
     if (!id) {
         return <div>Oh noTrip ID not found!</div>; 
     }
-
     return (
         <>
             <Navbar active="none" />
@@ -34,3 +30,4 @@ export default function EditTripPage() {
         </>
     );
 };
+
