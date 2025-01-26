@@ -6,7 +6,8 @@
 import React, {useEffect, useState} from 'react';
 import axios from 'axios';
 import TwoCards from "@components/twocards"
- 
+import axiosInstance from "@components/axios"; // Deine Axios-Instanz
+
 
 export default function AllCards() {
   const [trips, setTrips] = useState<
@@ -20,28 +21,39 @@ export default function AllCards() {
       comment: string;
     }>
   >([]);
-
+  const [error, setError] = useState<string | null>(null); // Fehlerzustand
+  
   useEffect(() => {
-    // Daten von der API laden
-    axios
-      .get('http://localhost:8000/api/trips')
-      .then((response) => setTrips(response.data))
-      .catch((error) => console.error('Error fetching trips:', error));
+    const fetchTrips = async () => {
+      try {
+        const response = await axiosInstance.get("/trips");
+        setTrips(response.data);
+      } catch (err: any) {
+        console.error("Error fetching trips:", err);
+        setError(
+          err.response?.status === 401
+            ? "Unauthorized! Please log in to view journeys."
+            : "Failed to load trips. Please try again."
+        );
+      }
+    };
+    fetchTrips();
   }, []);
 
-  const deleteTrip = (tripId: number) => {
-    if (confirm('Are you sure you want to delete this trip?')) {
-      axios
-        .delete(`http://localhost:8000/api/trips/${tripId}`)
-        .then(() => {
-          alert('Journey deleted!');
-          setTrips((prevTrips) => prevTrips.filter((trip) => trip.id !== tripId));
-        })
-        .catch((error) => console.error('Error deleting journey:', error));
+  
+  const deleteTrip = async (tripId: number) => {
+    if (confirm("Are you sure you want to delete this trip?")) {
+      try {
+        await axiosInstance.delete(`/trips/${tripId}`);
+        alert("Journey deleted!");
+        setTrips((prevTrips) => prevTrips.filter((trip) => trip.id !== tripId));
+      } catch (err) {
+        console.error("Error deleting journey:", err);
+        alert("Failed to delete journey.");
+      }
     }
   };
 
-  // Trips in Gruppen von zwei aufteilen
   const groupedTrips = trips.reduce((acc, trip, index) => {
     if (index % 2 === 0) acc.push([trip]);
     else acc[acc.length - 1].push(trip);

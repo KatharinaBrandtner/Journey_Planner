@@ -7,8 +7,8 @@ import Navbar from "@components/navbar"
 import Footer from '@components/footer';
 import Heading from '@components/heading';
 import AllCards from '@components/allcards';
-import Btn from "@components/button"
-import styles from "../page.module.css"
+import styles from "../page.module.css";
+
 
 export default function Page(){
   return (

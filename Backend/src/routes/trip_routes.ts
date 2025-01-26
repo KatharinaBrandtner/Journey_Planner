@@ -1,15 +1,14 @@
-// Autor: Katharina Brandtner 
-import {Router} from 'express'; 
+// // Autor: Katharina Brandtner 
 import {createController,readController,updateController,deleteController,readOneController} from '../controllers/trip_controller';
 
-const router=Router();
+import express from "express";
+import { verifyToken } from "../middlewares/auth_middleware";
 
-// Routen definieren
-router.post('/',createController);
-router.get('/',readController); ///erarbeitet GET-Anfragen auf /api/trips und ruft die getTrips-Funktion im Controller auf
-router.put('/:id',updateController);
-router.delete('/:id',deleteController);
+const router = express.Router();
 
-router.get('/:id',readOneController); 
+router.post("/trips", verifyToken, createController);
+router.get("/trips", verifyToken, readController);
+router.put("/trips/:id", verifyToken, updateController);
+router.delete("/trips/:id", verifyToken, deleteController);
 
-export default router; //exportieren des Routers, damit er in der server.ts verwendet werden kann, um die Anfragen zu verbinden
+export default router;

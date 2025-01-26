@@ -1,3 +1,6 @@
+// Autor: Katharina Brandtner
+
+//date controller
 //Datumswerte das korrekte Format DD.MM.YYYY hatte davor ja input feld date aber da gabs dann bei mongodb diese dumme formatierung und das hat mich zu viele nerven gekostet tbh
 export default function validateTripData(data: {startDate: string; endDate: string; numbercityone?: number; numbercitytwo?: number; numbercitythree?: number;}): string[] {
     const errors: string[] = [];

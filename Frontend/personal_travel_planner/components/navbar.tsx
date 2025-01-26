@@ -29,6 +29,12 @@ export default function Navbar({ active }: { active: string }) {
           <li className={`nav-item ${styles.navitem}`}>
             <a className={`nav-link ${styles.navlink}`} href="#">Profile</a>
           </li>
+          <li className={`nav-item ${styles.navitem}`}>
+            <a className={`nav-link ${styles.navlink} ${active === 'Login' ? styles.active : ''}`} href="/login">Login</a>
+          </li>
+          <li className={`nav-item ${styles.navitem}`}>
+            <a className={`nav-link ${styles.navlink} ${active === 'Register' ? styles.active : ''}`} href="/register">Create Account</a>
+          </li>
         </ul>
       </div>
     </nav>

@@ -57,6 +57,21 @@ h1.light{
   width: 100%;
 }
 
+.containerLogin{
+  max-height: fit-content !important;
+  background-color: var(--lightgrey);
+  -webkit-box-shadow: 0px 9px 18px -6px rgba(0,0,0,0.56); 
+  box-shadow: 0px 9px 18px -6px rgba(0,0,0,0.15);
+  margin-top: 80px !important;
+}
+.smallgrey{
+  font-size: small;
+  color: var(--grey);
+}
+.smallgrey a{
+  text-decoration: none;
+}
+
 
 /* buttons */
 .imageheader .btn-white {
