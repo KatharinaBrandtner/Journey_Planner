@@ -1,12 +1,14 @@
+// Autor: Katharina Brandtner
+
 import axios from"axios"
 
 const axiosInstance=axios.create({
-    baseURL:"http://localhost:8000/api" //Basis-URL des Backends
+    baseURL:"http://localhost:8000/api" 
 })
 
 axiosInstance.interceptors.request.use(config=>{
     const token=localStorage.getItem("authToken")
-    console.log("Token aus localStorage:",token) //Debug: Zeigt, ob der Token korrekt abgerufen wird
+    console.log("Token aus localStorage:",token) //Debug
     if(token){
         config.headers.Authorization=`Bearer ${token}`
     }else{

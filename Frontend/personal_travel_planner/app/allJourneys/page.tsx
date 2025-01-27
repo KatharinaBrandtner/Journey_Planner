@@ -18,6 +18,15 @@ export default function Page(){
   useEffect(() => {
     const token = localStorage.getItem("authToken");
     setIsAuthenticated(!!token); 
+
+    if (!token) {
+      // Wenn kein Token vorhanden ist, nach 10 Sekunden zur Login-Seite weiterleiten
+      const redirectTimeout = setTimeout(() => {
+        window.location.href = "/login"; // Weiterleitung zur Login-Seite
+      }, 5000); //5sek
+      return () => clearTimeout(redirectTimeout); // Timeout beim Verlassen der Komponente löschen
+    }
+
   }, []);
 
   if (!isAuthenticated) {
@@ -25,8 +34,14 @@ export default function Page(){
       <>
         <Navbar active="allJourneys" />
         <div className="container mt-5 text-center">
+          <br/>
+          <br/>
+          <br/>
+          <br/>
           <p className="alert alert-warning">
-            Bitte logge dich ein, um alle Reisen zu sehen.
+            Bitte logge dich ein, um alle Reisen zu sehen.<br/> 
+            In 5 Sekunden werden Sie automatisch auf die Login Seite weitergeleitet.<br/>
+            Sollte es nicht funktionieren kommen sie <a href="/login">hier</a> auf die Login Seite
           </p>
         </div>
         <Footer />

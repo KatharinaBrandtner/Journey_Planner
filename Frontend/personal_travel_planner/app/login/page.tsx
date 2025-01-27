@@ -64,7 +64,7 @@ export default function LoginPage(){
                             {error&&<div className="alert alert-danger">{error}</div>}
                             <Btn text="Login" variant="btn-dark" type="submit"/>
                             <br/><br/>
-                            <p className={`${styles.smallgrey}`}>New User?<a href="/register"><span className={`${styles.orange} ${styles.abstandrechts}`}>Sign up</span></a></p>
+                            <p className={`${styles.smallgrey}`}>New User?<a href="/register"><span className={`${styles.orange} ${styles.abstandrechts}`}>   Sign up</span></a></p>
                         </form>
                     </div>
                 </div>

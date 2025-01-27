@@ -12,7 +12,7 @@ export interface IUser{
 
 const UserSchema=new mongoose.Schema<IUser>({
     password:{type:String,required:true}, //in token verschlüsselt
-    email:{type:String,required:true}
+    email:{type:String,required:true,unique:true}
 })
 
 export default mongoose.model<IUser>("User",UserSchema)

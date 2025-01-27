@@ -24,9 +24,7 @@ export const signInUser=async(email:string,password:string)=>{
     if(!validPassword)throw new Error("Invalid credentials.")
 
     const token:string=jwt.sign(
-        {_id:user._id},
-        process.env.TOKEN_SECRET||"tokentest",
-        {expiresIn:"15m"}
+        {_id:user._id}, process.env.TOKEN_SECRET||"tokentest", {expiresIn: "15m"} //hier token ablaufen lassen nach 15min (muss dann aber nochmal auf logout klicken weil hihi)
     )
 
     return token

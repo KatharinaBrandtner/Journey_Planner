@@ -57,7 +57,7 @@ export default function RegisterPage(){
                             {success&&<div className="alert alert-success">{success}</div>}
                             <Btn text="Create account" variant="btn-dark" type="submit"/>
                             <br/><br/>
-                            <p className={`${styles.smallgrey}`}>Already have an account?<a href="/login"><span className={`${styles.orange} ${styles.abstandrechts}`}>Login</span></a></p>
+                            <p className={`${styles.smallgrey}`}>Already have an account?<a href="/login"><span className={`${styles.orange} ${styles.abstandrechts}`}>   Login</span></a></p>
                         </form>
                     </div>
                 </div>

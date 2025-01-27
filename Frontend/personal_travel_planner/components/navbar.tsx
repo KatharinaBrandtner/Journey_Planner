@@ -1,12 +1,26 @@
 // Katharina Brandtner
 // navbar
 
-import React from 'react';
+"use client";
+
+import React, { useEffect, useState } from "react";
 import styles from "../app/page.module.css";
 
 export default function Navbar({ active }: { active: string }) {
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
 
-  return (
+  useEffect(() => {
+    const token = localStorage.getItem("authToken");
+    setIsAuthenticated(!!token); // true, wenn Token existiert
+}, []);
+
+const handleLogout = () => {
+    localStorage.removeItem("authToken"); // Token löschen
+    setIsAuthenticated(false);
+    window.location.reload(); // Seite aktualisieren
+};
+
+return (
     <nav className={`navbar ${styles.navbar} fixed-top navbar-expand-sm justify-content-center`}>
       <div className="container">
         <a className="navbar-brand" href="/">
@@ -26,12 +40,15 @@ export default function Navbar({ active }: { active: string }) {
           <li className={`nav-item ${styles.navitem}`}>
             <a className={`nav-link ${styles.navlink}`} href="#">Guides</a>
           </li>
+
           <li className={`nav-item ${styles.navitem}`}>
-            <a className={`nav-link ${styles.navlink}`} href="#">Profile</a>
+            {isAuthenticated ? (<button className={`nav-link ${styles.navlink}`} onClick={handleLogout}>Logout</button>) : (
+              <a className={`nav-link ${styles.navlink} ${active === "Login" ? styles.active : ''}`} href="/login">Login</a>)}
           </li>
-          <li className={`nav-item ${styles.navitem}`}>
+          {/* <li className={`nav-item ${styles.navitem}`}>
             <a className={`nav-link ${styles.navlink} ${active === 'Login' ? styles.active : ''}`} href="/login">Login</a>
-          </li>
+          </li> */}
+
           <li className={`nav-item ${styles.navitem}`}>
             <a className={`nav-link ${styles.navlink} ${active === 'Register' ? styles.active : ''}`} href="/register">Create Account</a>
           </li>
