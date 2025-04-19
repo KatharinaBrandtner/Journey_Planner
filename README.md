@@ -138,7 +138,7 @@ The backend includes optional authentication endpoints (JWT-based). You can regi
 
 ---
 
-## 📸 Screenshots (Optional)
+## 📸 Screenshots 
 
 ![Hero Section](/readme_images/hero.png)
 ![Add new city](/readme_images/add.png)
