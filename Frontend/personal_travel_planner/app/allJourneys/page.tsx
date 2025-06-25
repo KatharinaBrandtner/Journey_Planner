@@ -2,6 +2,7 @@
 
 // Katharina Brandtner
 // alljourneys
+//test comment wegen merge
 
 import React, { useEffect, useState } from "react";
 
