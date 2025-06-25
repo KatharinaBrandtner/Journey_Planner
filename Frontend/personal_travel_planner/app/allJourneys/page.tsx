@@ -12,7 +12,7 @@ import Heading from '@components/heading';
 import AllCards from '@components/allcards';
 import styles from "../page.module.css";
 
-
+//test comment2 wegen merge
 export default function Page(){
   const [isAuthenticated, setIsAuthenticated]=useState(false);
 
